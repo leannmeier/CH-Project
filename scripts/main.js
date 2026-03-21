@@ -143,13 +143,10 @@ function manejarNombre() {
         nameInput.focus()
         return
     }
-
     nombreUsuario = valor.trim()
     welcomeModal.classList.add('hidden')
-
     welcomeMsg.textContent = `¡Hola, ${nombreUsuario}! Bienvenido/a a iPRO 👋`
     welcomeMsg.classList.remove('hidden')
-
     mostrarToast(`¡Bienvenido/a, ${nombreUsuario}!`)
 }
 /**
@@ -170,8 +167,7 @@ function agregarAlCarrito(id) {
     if (itemExistente) {
         itemExistente.cantidad++
     } else {
-        const precioFinal = calcularPrecioFinal(producto, diaDescuento())
-        carrito.push({ id: producto.id, nombre: producto.nombre, precio: precioFinal, cantidad: 1 })
+        carrito.push({ id: producto.id, cantidad: 1 })
     }
 
     guardarCarritoEnStorage()
@@ -205,17 +201,43 @@ function renderizarCarrito() {
         return
     }
 
-    cartItems.innerHTML = carrito.map(item => `
-        <div class="cart-item">
-            <span>${item.nombre} x${item.cantidad}</span>
-            <span>$${(item.precio * item.cantidad).toLocaleString('es-AR')}</span>
-            <button class="cart-item-remove" onclick="eliminarDelCarrito(${item.id})">🗑️</button>
-        </div>
-    `).join('')
+    const hayDescuento = diaDescuento()
 
-    const totalGeneral = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0)
+    cartItems.innerHTML = carrito.map(item => {
+        const producto = obtenerProducto(item.id)
+        if (!producto) return '' // Por si acaso se eliminó el producto
+        
+        const precioActual = calcularPrecioFinal(producto, hayDescuento)
+        const subtotal = precioActual * item.cantidad
+
+        return `
+            <div class="cart-item">
+                <span>${producto.nombre} x${item.cantidad}</span>
+                <span>$${subtotal.toLocaleString('es-AR')}</span>
+                <button class="cart-item-remove" data-id="${item.id}">🗑️</button>
+            </div>
+        `
+    }).join('')
+
+    // Event listeners para botones de eliminar
+    document.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = parseInt(e.target.dataset.id)
+            eliminarDelCarrito(id)
+        })
+    })
+
+    // Calcular total
+    const totalGeneral = carrito.reduce((acc, item) => {
+        const producto = obtenerProducto(item.id)
+        if (!producto) return acc
+        const precioActual = calcularPrecioFinal(producto, hayDescuento)
+        return acc + (precioActual * item.cantidad)
+    }, 0)
+    
     cartTotal.textContent = `Total: $${totalGeneral.toLocaleString('es-AR')} ARS`
 }
+
 /**
  * Abre el modal del carrito
  */
