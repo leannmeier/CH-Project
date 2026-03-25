@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <title>iPRO - Los mejores precios</title>
 </head>
 
@@ -26,15 +29,6 @@
         </nav>
     </header>
     <main>
-        <div class="modal-overlay" id="welcomeModal">
-            <div class="modal">
-                <h2>¡Bienvenido a iPRO!</h2>
-                <p>¿Cuál es tu nombre?</p>
-                <input type="text" id="nameInput" placeholder="Tu nombre..." maxlength="40" autocomplete="off">
-                <p class="input-error" id="nameError"></p>
-                <button class="btn-primary" id="nameSubmit">Entrar</button>
-            </div>
-        </div>
         <div class="modal-overlay hidden" id="cartModal">
             <div class="modal modal-cart">
                 <button class="modal-close" id="closeCart">✕</button>
@@ -44,40 +38,12 @@
                 <button class="btn-primary" id="checkoutBtn">Finalizar compra</button>
             </div>
         </div>
-        <div class="toast hidden" id="toast"></div>
         <div id="discountBanner" class="discount-banner hidden">
             🎉 ¡HOY ES DÍA DE DESCUENTO! Precios especiales en todos los productos
         </div>
         <div class="welcome-msg hidden" id="welcomeMsg"></div>
         <section class="products" id="productsSection">
-            <article class="card" data-id="1">
-                <img src="./images/macbook-pro-ultimate.png" alt="MacBook 14 Pro Ultimate">
-                <h2>MacBook 14 Pro Ultimate</h2>
-                <p class="price" id="price-1"></p>
-                <p class="price-original hidden" id="original-1"></p>
-                <button class="btn-add" data-id="1">Agregar al carrito</button>
-            </article>
-            <article class="card" data-id="2">
-                <img src="./images/iphone17-pro-max.webp" alt="iPhone 17 PRO MAX">
-                <h2>iPhone 17 PRO MAX</h2>
-                <p class="price" id="price-2"></p>
-                <p class="price-original hidden" id="original-2"></p>
-                <button class="btn-add" data-id="2">Agregar al carrito</button>
-            </article>
-            <article class="card" data-id="3">
-                <img src="./images/iPhone-air.webp" alt="iPhone Air">
-                <h2>iPhone Air</h2>
-                <p class="price" id="price-3"></p>
-                <p class="price-original hidden" id="original-3"></p>
-                <button class="btn-add" data-id="3">Agregar al carrito</button>
-            </article>
-            <article class="card" data-id="4">
-                <img src="./images/airpods-pro.png" alt="AirPods Pro">
-                <h2>AirPods Pro</h2>
-                <p class="price" id="price-4"></p>
-                <p class="price-original hidden" id="original-4"></p>
-                <button class="btn-add" data-id="4">Agregar al carrito</button>
-            </article>
+
         </section>
     </main>
     <footer>
